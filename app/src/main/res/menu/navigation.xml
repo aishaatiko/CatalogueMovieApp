@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item
+        android:id="@+id/menuNow"
+        android:enabled="true"
+        android:icon="@drawable/ic_today_black_24dp"
+        android:title="@string/now_playing"
+        app:showAsAction="ifRoom" />
+    <item
+        android:id="@+id/menuUpcoming"
+        android:enabled="true"
+        android:icon="@drawable/ic_update_black_24dp"
+        android:title="@string/up_coming"
+        app:showAsAction="ifRoom" />
+
+    <item
+        android:id="@+id/menuFav"
+        android:enabled="true"
+        android:icon="@drawable/ic_favorite_black_24dp"
+        android:title="@string/favorite"
+        app:showAsAction="ifRoom" />
+</menu>
