@@ -15,9 +15,9 @@
         app:showAsAction="ifRoom" />
 
     <item
-        android:id="@+id/menuFav"
+        android:id="@+id/menuSearch"
         android:enabled="true"
-        android:icon="@drawable/ic_favorite_black_24dp"
-        android:title="@string/favorite"
+        android:icon="@drawable/ic_search_black_24dp"
+        android:title="@string/search"
         app:showAsAction="ifRoom" />
 </menu>

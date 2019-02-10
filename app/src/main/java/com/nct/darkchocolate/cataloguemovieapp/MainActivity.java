@@ -43,9 +43,9 @@ public class MainActivity extends AppCompatActivity {
                         pageContent = new UpcomingFragment();
                         title = getString(R.string.up_coming);
                         break;
-                    case R.id.menuFav:
+                    case R.id.menuSearch:
                         pageContent = new SearchMovieFragment();
-                        title = getString(R.string.favorite);
+                        title = getString(R.string.search);
                         break;
                 }
                 setActionBarTitle(title);

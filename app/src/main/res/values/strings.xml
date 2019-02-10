@@ -2,13 +2,11 @@
     <string name="app_name">Movie Catalogue</string>
 
     <!-- TODO: Remove or change this placeholder text -->
-    <string name="search_movie">Search Movie</string>
     <string name="up_coming">Up Coming</string>
     <string name="now_playing">Now Playing</string>
     <string name="movie_title_hint">Movie Title</string>
     <string name="search">Search</string>
     <string name="movie_title_detail">movie_title</string>
-    <string name="sub_title_detail">sub_title</string>
     <string name="_0_0_rating">0.0</string>
     <string name="_000_duration">000</string>
     <string name="en_language">EN</string>
