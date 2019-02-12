@@ -2,20 +2,14 @@ package com.nct.darkchocolate.cataloguemovieapp;
 
 
 import android.content.Intent;
+import android.os.Bundle;
 import android.provider.Settings;
 import android.support.annotation.NonNull;
-import android.support.design.widget.NavigationView;
-import android.support.v4.app.Fragment;
-import android.support.v4.widget.DrawerLayout;
-import android.support.v7.app.ActionBarDrawerToggle;
-import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.support.design.widget.BottomNavigationView;
-import android.support.v7.widget.Toolbar;
+import android.support.v4.app.Fragment;
+import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
-
-import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
     public static final String KEY_TITLE = "title";
@@ -43,9 +37,9 @@ public class MainActivity extends AppCompatActivity {
                         pageContent = new UpcomingFragment();
                         title = getString(R.string.up_coming);
                         break;
-                    case R.id.menuSearch:
-                        pageContent = new SearchMovieFragment();
-                        title = getString(R.string.search);
+                    case R.id.menuFav:
+                        pageContent = new FavoriteFragment();
+                        title = getString(R.string.favorite);
                         break;
                 }
                 setActionBarTitle(title);
@@ -92,8 +86,6 @@ public class MainActivity extends AppCompatActivity {
             Intent mIntent = new Intent(Settings.ACTION_LOCALE_SETTINGS);
             startActivity(mIntent);
         }
-
-        title = getSupportActionBar().getTitle().toString();
         return super.onOptionsItemSelected(item);
     }
 

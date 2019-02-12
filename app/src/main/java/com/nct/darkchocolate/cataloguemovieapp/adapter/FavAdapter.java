@@ -11,7 +11,7 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.nct.darkchocolate.cataloguemovieapp.BuildConfig;
-import com.nct.darkchocolate.cataloguemovieapp.MovieItems;
+import com.nct.darkchocolate.cataloguemovieapp.FavItems;
 import com.nct.darkchocolate.cataloguemovieapp.R;
 
 import java.util.ArrayList;
@@ -19,11 +19,11 @@ import java.util.ArrayList;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.CategoryViewHolder> {
-    private ArrayList<MovieItems> mData;
+public class FavAdapter extends RecyclerView.Adapter<FavAdapter.CategoryViewHolder> {
+    private ArrayList<FavItems> mData;
 
 
-    public MovieAdapter(Context context, ArrayList<MovieItems> items) {
+    public FavAdapter(Context context, ArrayList<FavItems> items) {
         this.context = context;
         this.mData = items;
 
@@ -31,11 +31,11 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.CategoryView
 
     private Context context;
 
-    public ArrayList<MovieItems> getListMovie() {
+    public ArrayList<FavItems> getListMovie() {
         return mData;
     }
 
-    public void setData(ArrayList<MovieItems> listMovie) {
+    public void setData(ArrayList<FavItems> listMovie) {
         this.mData = new ArrayList<>();
         this.mData.addAll(listMovie);
 
@@ -73,7 +73,17 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.CategoryView
             super(itemView);
             ButterKnife.bind(this, itemView);
         }
+    }
+
+    public void addItem(FavItems favItems) {
+        this.mData.add(favItems);
+        notifyItemInserted(mData.size() - 1);
+    }
 
 
+    public void removeItem(int position) {
+        this.mData.remove(position);
+        notifyItemRemoved(position);
+        notifyItemRangeChanged(position,mData.size());
     }
 }

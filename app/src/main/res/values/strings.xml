@@ -23,4 +23,6 @@
     <string name="movie_description">Movie Description</string>
     <string name="movie_title">Movie Title</string>
     <string name="favorite">Favorites</string>
+    <string name="added_to_fav">Added to favorite</string>
+    <string name="remove_from_fav">Removed from favorite</string>
 </resources>

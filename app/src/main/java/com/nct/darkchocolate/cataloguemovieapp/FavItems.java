@@ -5,31 +5,55 @@ import android.os.Parcelable;
 
 import org.json.JSONObject;
 
-public class MovieItems implements Parcelable {
+public class FavItems implements Parcelable {
 
     public void setId(int id) {
         this.id = id;
     }
 
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public void setPoster_path(String poster_path) {
+        this.poster_path = poster_path;
+    }
 
     private int id;
 
-    protected MovieItems(Parcel in) {
+    public int getMovie_id() {
+        return movie_id;
+    }
+
+    public void setMovie_id(int movie_id) {
+        this.movie_id = movie_id;
+    }
+
+    private int movie_id;
+
+    public FavItems() {
+    }
+
+    protected FavItems(Parcel in) {
         id = in.readInt();
         title = in.readString();
         description = in.readString();
         poster_path = in.readString();
     }
 
-    public static final Creator<MovieItems> CREATOR = new Creator<MovieItems>() {
+    public static final Creator<FavItems> CREATOR = new Creator<FavItems>() {
         @Override
-        public MovieItems createFromParcel(Parcel in) {
-            return new MovieItems(in);
+        public FavItems createFromParcel(Parcel in) {
+            return new FavItems(in);
         }
 
         @Override
-        public MovieItems[] newArray(int size) {
-            return new MovieItems[size];
+        public FavItems[] newArray(int size) {
+            return new FavItems[size];
         }
     };
 
@@ -53,7 +77,7 @@ public class MovieItems implements Parcelable {
     private String description;
     private String poster_path;
 
-    public MovieItems(JSONObject object){
+    public FavItems(JSONObject object){
 
         try {
             int id = object.getInt("id");

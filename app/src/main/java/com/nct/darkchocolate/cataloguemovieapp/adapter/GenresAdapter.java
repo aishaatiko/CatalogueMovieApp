@@ -1,6 +1,5 @@
 package com.nct.darkchocolate.cataloguemovieapp.adapter;
 
-import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -18,10 +17,9 @@ import butterknife.ButterKnife;
 
 public class GenresAdapter extends RecyclerView.Adapter<GenresAdapter.CategoryViewHolder> {
     private ArrayList<GenresList> mData = new ArrayList<>();
-    private Context context;
 
-    public GenresAdapter(Context context) {
-        this.context = context;
+    public GenresAdapter() {
+
     }
 
     public ArrayList<GenresList> getListGenre() {
@@ -51,7 +49,8 @@ public class GenresAdapter extends RecyclerView.Adapter<GenresAdapter.CategoryVi
     }
 
     public class CategoryViewHolder extends RecyclerView.ViewHolder {
-        @BindView(R.id.tv_genres) TextView tvGenre;
+        @BindView(R.id.tv_genres)
+        TextView tvGenre;
 
         CategoryViewHolder(@NonNull View itemView) {
             super(itemView);

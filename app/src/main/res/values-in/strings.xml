@@ -23,4 +23,7 @@
     <string name="movie_description">Deskripsi Film</string>
     <string name="movie_title">Judul Film</string>
     <string name="favorite">Favorit</string>
+    <string name="added_to_fav">Ditambahkan ke favorit</string>
+    <string name="remove_from_fav">Dihapus dari favorit</string>
+
 </resources>

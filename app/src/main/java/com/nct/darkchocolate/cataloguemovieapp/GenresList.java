@@ -24,9 +24,6 @@ public class GenresList implements Parcelable {
         }
     };
 
-    public int getGenreId() {
-        return genreId;
-    }
 
     public String getGenreName() {
         return genreName;
