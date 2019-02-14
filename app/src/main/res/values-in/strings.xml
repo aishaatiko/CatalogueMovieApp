@@ -4,8 +4,6 @@
     <!-- TODO: Remove or change this placeholder text -->
     <string name="up_coming">Akan Datang</string>
     <string name="now_playing">Sedang Tayang</string>
-    <string name="movie_title_hint">Judul Film</string>
-    <string name="search">Cari</string>
     <string name="movie_title_detail">judul_film</string>
     <string name="_0_0_rating">0.0</string>
     <string name="_000_duration">000</string>

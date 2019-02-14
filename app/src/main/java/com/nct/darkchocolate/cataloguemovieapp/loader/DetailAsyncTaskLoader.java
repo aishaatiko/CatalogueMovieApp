@@ -110,7 +110,6 @@ public class DetailAsyncTaskLoader extends AsyncTaskLoader<DetailItems> {
             }
         });
 
-        DetailItems detailItems  = detailItemss.get(0);
-        return detailItems;
+        return detailItemss.get(0);
     }
 }

@@ -4,8 +4,6 @@
     <!-- TODO: Remove or change this placeholder text -->
     <string name="up_coming">Up Coming</string>
     <string name="now_playing">Now Playing</string>
-    <string name="movie_title_hint">Movie Title</string>
-    <string name="search">Search</string>
     <string name="movie_title_detail">movie_title</string>
     <string name="_0_0_rating">0.0</string>
     <string name="_000_duration">000</string>
