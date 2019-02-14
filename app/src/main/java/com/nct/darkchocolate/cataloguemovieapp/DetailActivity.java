@@ -144,22 +144,19 @@ public class DetailActivity extends AppCompatActivity implements LoaderManager.L
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case android.R.id.home:
+        if (item.getItemId() == android.R.id.home){
+            finish();
+            return true;
+        } else if (item.getItemId() == R.id.add_to_favorite){
+            if (isFavorite){
+                removeFromFavorite();
+            } else {
+                addToFavorite();
+            }
 
-                finish();
-
-                break;
-            case R.id.add_to_favorite:
-                if (isFavorite){
-                    removeFromFavorite();
-                } else {
-                    addToFavorite();
-                }
-
-                isFavorite = !isFavorite;
-                setFavorite();
-                break;
+            isFavorite = !isFavorite;
+            setFavorite();
+            return true;
         }
         return super.onOptionsItemSelected(item);
     }
@@ -168,6 +165,7 @@ public class DetailActivity extends AppCompatActivity implements LoaderManager.L
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.detail_menu, menu);
         menuItem = menu;
+
         return super.onCreateOptionsMenu(menu);
     }
 

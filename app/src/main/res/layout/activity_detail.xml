@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -12,155 +13,173 @@
 
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-    <LinearLayout
-        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical">
-        <ProgressBar
-            android:id="@+id/pb_detail"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
-        <de.hdodenhof.circleimageview.CircleImageView
-            android:id="@+id/iv_poster"
-            android:layout_width="@dimen/image_width"
-            android:layout_height="@dimen/image_height"
-            android:src="@drawable/ic_launcher_background"
-            android:layout_gravity="center_horizontal"
-            />
-        <TextView
-            android:id="@+id/tv_title"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:paddingTop="@dimen/activity_vertical_margin"
-            android:layout_gravity="center_horizontal"
-            android:text="@string/movie_title_detail"
-            android:textSize="@dimen/medium_text"
-            android:textColor="@color/colorPrimaryDark"
-            android:textStyle="bold"/>
-        <TextView
-            android:id="@+id/tv_tagline"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:text="@string/tagline"
-            android:textSize="@dimen/semi_small_text"/>
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:paddingBottom="@dimen/activity_vertical_margin"
-            android:paddingLeft="@dimen/activity_horizontal_margin"
-            android:paddingRight="@dimen/activity_horizontal_margin"
-            android:paddingTop="@dimen/activity_vertical_margin"
-            android:orientation="horizontal"
-            android:weightSum="3"
-            android:baselineAligned="false">
-            <LinearLayout
+            android:orientation="vertical">
+
+            <ProgressBar
+                android:id="@+id/pb_detail"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:id="@+id/iv_poster"
+                android:layout_width="@dimen/image_width"
+                android:layout_height="@dimen/image_height"
+                android:layout_gravity="center_horizontal"
+                android:src="@drawable/ic_launcher_background" />
+
+            <TextView
+                android:id="@+id/tv_title"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:layout_weight="1">
-                <TextView
-                    android:id="@+id/tv_rating"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/_0_0_rating"
-                    android:layout_gravity="center_horizontal"
-                    android:textSize="@dimen/large_text"
-                    android:textColor="@color/colorAccent"/>
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/rating"
-                    android:layout_gravity="center_horizontal"/>
-            </LinearLayout>
+                android:layout_gravity="center_horizontal"
+                android:paddingTop="@dimen/activity_vertical_margin"
+                android:text="@string/movie_title_detail"
+                android:textColor="@color/colorPrimaryDark"
+                android:textSize="@dimen/medium_text"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/tv_tagline"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:text="@string/tagline"
+                android:textSize="@dimen/semi_small_text" />
 
             <LinearLayout
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:layout_weight="1">
-                <TextView
-                    android:id="@+id/tv_duration"
+                android:baselineAligned="false"
+                android:orientation="horizontal"
+                android:paddingLeft="@dimen/activity_horizontal_margin"
+                android:paddingTop="@dimen/activity_vertical_margin"
+                android:paddingRight="@dimen/activity_horizontal_margin"
+                android:paddingBottom="@dimen/activity_vertical_margin"
+                android:weightSum="3">
+
+                <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/_000_duration"
-                    android:layout_gravity="center_horizontal"
-                    android:textSize="@dimen/large_text"
-                    android:textColor="@color/colorAccent"/>
-                <TextView
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/tv_rating"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_horizontal"
+                        android:text="@string/_0_0_rating"
+                        android:textColor="@color/colorAccent"
+                        android:textSize="@dimen/large_text" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_horizontal"
+                        android:text="@string/rating" />
+                </LinearLayout>
+
+                <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/duration"
-                    android:layout_gravity="center_horizontal"/>
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/tv_duration"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_horizontal"
+                        android:text="@string/_000_duration"
+                        android:textColor="@color/colorAccent"
+                        android:textSize="@dimen/large_text" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_horizontal"
+                        android:text="@string/duration" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/tv_language"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_horizontal"
+                        android:text="@string/en_language"
+                        android:textAllCaps="true"
+                        android:textColor="@color/colorAccent"
+                        android:textSize="@dimen/large_text" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_horizontal"
+                        android:text="@string/language" />
+                </LinearLayout>
             </LinearLayout>
 
-            <LinearLayout
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingTop="@dimen/activity_vertical_margin"
+                android:paddingBottom="@dimen/activity_vertical_margin"
+                android:text="@string/genre"
+                android:textSize="@dimen/small_text"
+                android:textStyle="bold" />
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/rv_genre"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:layout_weight="1">
-                <TextView
-                    android:id="@+id/tv_language"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/en_language"
-                    android:layout_gravity="center_horizontal"
-                    android:textSize="@dimen/large_text"
-                    android:textColor="@color/colorAccent"
-                    android:textAllCaps="true"/>
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/language"
-                    android:layout_gravity="center_horizontal"/>
-            </LinearLayout>
+                tools:listitem="@layout/genres_list" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingTop="@dimen/activity_vertical_margin"
+                android:paddingBottom="@dimen/activity_vertical_margin"
+                android:text="@string/release"
+                android:textSize="@dimen/small_text"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/tv_release"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/_0000_00_00_release"
+                android:textColor="@color/colorAccent" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingTop="@dimen/activity_vertical_margin"
+                android:paddingBottom="@dimen/activity_vertical_margin"
+                android:text="@string/overview"
+                android:textSize="@dimen/small_text"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/tv_overview"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/overview_content" />
+
         </LinearLayout>
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:paddingTop="@dimen/activity_vertical_margin"
-            android:paddingBottom="@dimen/activity_vertical_margin"
-            android:textStyle="bold"
-            android:textSize="@dimen/small_text"
-            android:text="@string/genre" />
-
-        <android.support.v7.widget.RecyclerView
-            android:id="@+id/rv_genre"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            tools:listitem="@layout/genres_list" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:paddingTop="@dimen/activity_vertical_margin"
-            android:paddingBottom="@dimen/activity_vertical_margin"
-            android:textStyle="bold"
-            android:textSize="@dimen/small_text"
-            android:text="@string/release"/>
-        <TextView
-            android:id="@+id/tv_release"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/_0000_00_00_release"
-            android:textColor="@color/colorAccent"/>
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:paddingTop="@dimen/activity_vertical_margin"
-            android:paddingBottom="@dimen/activity_vertical_margin"
-            android:textStyle="bold"
-            android:textSize="@dimen/small_text"
-            android:text="@string/overview"/>
-        <TextView
-            android:id="@+id/tv_overview"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/overview_content"/>
-
-    </LinearLayout>
     </ScrollView>
-</LinearLayout>
+</android.support.constraint.ConstraintLayout>
