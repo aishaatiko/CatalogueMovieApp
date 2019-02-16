@@ -15,11 +15,11 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                     " %s TEXT NOT NULL," +
                     " %s TEXT NOT NULL)",
             DatabaseContract.TABLE_NAME,
-            DatabaseContract.NoteColumns._ID,
-            DatabaseContract.NoteColumns.MOVIE_ID,
-            DatabaseContract.NoteColumns.TITLE,
-            DatabaseContract.NoteColumns.DESCRIPTION,
-            DatabaseContract.NoteColumns.POSTER
+            DatabaseContract.MovieColumns._ID,
+            DatabaseContract.MovieColumns.MOVIE_ID,
+            DatabaseContract.MovieColumns.TITLE,
+            DatabaseContract.MovieColumns.DESCRIPTION,
+            DatabaseContract.MovieColumns.POSTER
     );
 
     public DatabaseHelper(Context context) {

@@ -23,4 +23,5 @@
     <string name="favorite">Favorites</string>
     <string name="added_to_fav">Added to favorite</string>
     <string name="remove_from_fav">Removed from favorite</string>
+    <string name="nothing">Favorite List is Empty</string>
 </resources>

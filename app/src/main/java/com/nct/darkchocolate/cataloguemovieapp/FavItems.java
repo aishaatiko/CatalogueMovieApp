@@ -1,11 +1,34 @@
 package com.nct.darkchocolate.cataloguemovieapp;
 
+import android.database.Cursor;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import com.nct.darkchocolate.cataloguemovieapp.db.DatabaseContract;
+
 import org.json.JSONObject;
 
+import static android.provider.BaseColumns._ID;
+import static com.nct.darkchocolate.cataloguemovieapp.db.DatabaseContract.getColumnInt;
+import static com.nct.darkchocolate.cataloguemovieapp.db.DatabaseContract.getColumnString;
+
 public class FavItems implements Parcelable {
+
+    public FavItems(int id, int movieId, String title, String description, String poster) {
+        this.id = id;
+        this.movie_id = movieId;
+        this.title = title;
+        this.description = description;
+        this.poster_path = poster;
+    }
+
+    public FavItems(Cursor cursor) {
+        this.id = getColumnInt(cursor, _ID);
+        this.movie_id = getColumnInt(cursor, DatabaseContract.MovieColumns.MOVIE_ID);
+        this.title = getColumnString(cursor, DatabaseContract.MovieColumns.TITLE);
+        this.description = getColumnString(cursor, DatabaseContract.MovieColumns.DESCRIPTION);
+        this.poster_path = getColumnString(cursor, DatabaseContract.MovieColumns.POSTER);
+    }
 
     public void setId(int id) {
         this.id = id;
@@ -76,24 +99,6 @@ public class FavItems implements Parcelable {
     private String title;
     private String description;
     private String poster_path;
-
-    public FavItems(JSONObject object){
-
-        try {
-            int id = object.getInt("id");
-            String title = object.getString("original_title");
-            String description = object.getString("overview");
-            String poster_path = object.getString("poster_path");
-
-            this.id = id;
-            this.title = title;
-            this.description = description;
-            this.poster_path = poster_path;
-
-        }catch (Exception e){
-            e.printStackTrace();
-        }
-    }
 
     @Override
     public int describeContents() {
