@@ -1,5 +1,6 @@
 package com.nct.darkchocolate.cataloguemovieapp;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -10,9 +11,12 @@ import android.support.v4.content.Loader;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.ProgressBar;
 
 import com.nct.darkchocolate.cataloguemovieapp.adapter.MovieAdapter;
@@ -23,26 +27,25 @@ import java.util.ArrayList;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class NowPlayingFragment extends Fragment implements LoaderManager.LoaderCallbacks<ArrayList<MovieItems>>, SwipeRefreshLayout.OnRefreshListener {
+public class SearchMovieFragment extends Fragment implements LoaderManager.LoaderCallbacks<ArrayList<MovieItems>> {
+
 
     @BindView(R.id.rv_category) RecyclerView recyclerView;
-    ArrayList<MovieItems> movies = new ArrayList<>();
-
+    private ArrayList<MovieItems> movies = new ArrayList<>();
     MovieAdapter adapter;
-    @BindView(R.id.pb_movie)
-    ProgressBar progressBar;
-    @BindView(R.id.srl_movie)
-    SwipeRefreshLayout swipeRefreshLayout;
+    @BindView(R.id.pb_movie) ProgressBar progressBar;
+    @BindView(R.id.srl_movie) SwipeRefreshLayout swipeRefreshLayout;
 
-    public static final String STATE_LIST = "movies";
-
-    public NowPlayingFragment() {
-    }
+    static final String KEY_MOVIE = "key_movie";
+    public static final String STATE_LIST = "state_list";
+    static final String EXTRAS_MOVIE = "extras_movie";
+    String movie;
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.rv_layout, container, false);
+
         ButterKnife.bind(this, rootView);
 
         return rootView;
@@ -58,8 +61,17 @@ public class NowPlayingFragment extends Fragment implements LoaderManager.Loader
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         recyclerView.setAdapter(adapter);
 
+        movies = null;
+        Bundle bundle = this.getArguments();
+        if (bundle != null) {
+            movie = bundle.getString(KEY_MOVIE);
+            bundle.putString(EXTRAS_MOVIE, movie);
+        }
+
+        if (TextUtils.isEmpty(movie)) return;
+
         if (savedInstanceState == null) {
-            getLoaderManager().initLoader(0, null, this);
+            getLoaderManager().initLoader(0, bundle, this);
         } else {
             progressBar.setVisibility(View.GONE);
 
@@ -71,33 +83,35 @@ public class NowPlayingFragment extends Fragment implements LoaderManager.Loader
                     showSelectedMovie(movies.get(position));
                 }
             });
+
         }
 
-        swipeRefreshLayout.setOnRefreshListener(this);
+        swipeRefreshLayout.setRefreshing(false);
+        swipeRefreshLayout.setEnabled(false);
 
     }
 
-
-    @NonNull
     @Override
-    public Loader<ArrayList<MovieItems>> onCreateLoader(int id, @Nullable Bundle args) {
+    public Loader<ArrayList<MovieItems>> onCreateLoader(int id, Bundle args) {
         progressBar.setVisibility(View.VISIBLE);
-
-        return new MovieAsyncTaskLoader(getContext(),"","now_playing");
+        String searchMovie = "";
+        if (args != null){
+            searchMovie = args.getString(EXTRAS_MOVIE);
+        }
+        return new MovieAsyncTaskLoader(getContext(), searchMovie, "search");
     }
 
     @Override
-    public void onLoadFinished(@NonNull android.support.v4.content.Loader<ArrayList<MovieItems>> loader, final ArrayList<MovieItems> data) {
-        progressBar.setVisibility(View.GONE);
-
-        movies = data;
-        adapter.setData(movies);
+    public void onLoadFinished(@NonNull Loader<ArrayList<MovieItems>> loader, final ArrayList<MovieItems> data) {
+        adapter.setData(data);
         ItemClickSupport.addTo(recyclerView).setOnItemClickListener(new ItemClickSupport.OnItemClickListener() {
             @Override
             public void onItemClicked(RecyclerView recyclerView, int position, View v) {
                 showSelectedMovie(data.get(position));
             }
         });
+        movies = data;
+        progressBar.setVisibility(View.GONE);
 
     }
 
@@ -111,19 +125,13 @@ public class NowPlayingFragment extends Fragment implements LoaderManager.Loader
     }
 
     @Override
-    public void onLoaderReset(@NonNull android.support.v4.content.Loader<ArrayList<MovieItems>> loader) {
+    public void onLoaderReset(@NonNull Loader<ArrayList<MovieItems>> loader) {
         adapter.setData(null);
     }
 
     @Override
-    public void onRefresh() {
-
-        getLoaderManager().restartLoader(0, null, NowPlayingFragment.this);
-        swipeRefreshLayout.setRefreshing(false);
-    }
-
-    @Override
     public void onSaveInstanceState(@NonNull Bundle outState) {
+        outState.putString(KEY_MOVIE, movie);
         outState.putParcelableArrayList(STATE_LIST, movies);
         super.onSaveInstanceState(outState);
     }

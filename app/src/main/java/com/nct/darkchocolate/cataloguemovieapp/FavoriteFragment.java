@@ -48,7 +48,7 @@ public class FavoriteFragment extends Fragment implements LoadFavCallback{
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View rootView = inflater.inflate(R.layout.fragment_now_up, container, false);
+        View rootView = inflater.inflate(R.layout.rv_layout, container, false);
         ButterKnife.bind(this, rootView);
 
         return rootView;
@@ -84,6 +84,9 @@ public class FavoriteFragment extends Fragment implements LoadFavCallback{
                 showSelectedMovie(movies.get(position),position);
             }
         });
+
+        swipeRefreshLayout.setRefreshing(false);
+        swipeRefreshLayout.setEnabled(false);
 
     }
 
