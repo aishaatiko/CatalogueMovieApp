@@ -23,5 +23,8 @@
     <string name="favorite">Favorit</string>
     <string name="added_to_fav">Ditambahkan ke favorit</string>
     <string name="remove_from_fav">Dihapus dari favorit</string>
+    <string name="search_hint">Judul Film</string>
+    <string name="search">Cari</string>
+    <string name="nothing">Daftar Favorit Kosong</string>
 
 </resources>
