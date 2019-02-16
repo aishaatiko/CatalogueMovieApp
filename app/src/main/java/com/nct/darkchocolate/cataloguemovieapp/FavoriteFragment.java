@@ -4,7 +4,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.database.ContentObserver;
 import android.database.Cursor;
-import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
@@ -93,6 +92,9 @@ public class FavoriteFragment extends Fragment implements LoadFavCallback{
                 showSelectedMovie(movies.get(position),position);
             }
         });
+
+        swipeRefreshLayout.setRefreshing(false);
+        swipeRefreshLayout.setEnabled(false);
     }
 
     private void showSelectedMovie(FavItems items, int position){
