@@ -2,6 +2,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.nct.darkchocolate.cataloguemovieapp">
     <uses-permission android:name="android.permission.INTERNET" />
+    <permission android:name="com.dicoding.cataloguemovieapp.READ_DATABASE" android:protectionLevel="normal"/>
+    <permission android:name="com.dicoding.cataloguemovieapp.WRITE_DATABASE" android:protectionLevel="normal"/>
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -26,6 +28,12 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".MainActivity" />
         </activity>
+        <provider
+            android:authorities="com.nct.darkchocolate.cataloguemovieapp"
+            android:name=".provider.MovieProvider"
+            android:exported="true"
+            android:readPermission="com.nct.darkchocolate.cataloguemovieapp.READ_DATABASE"
+            android:writePermission="com.nct.darkchocolate.cataloguemovieapp.WRITE_DATABASE" />
     </application>
 
 </manifest>

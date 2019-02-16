@@ -13,10 +13,10 @@ import com.nct.darkchocolate.cataloguemovieapp.FavItems;
 import java.util.ArrayList;
 
 import static android.provider.BaseColumns._ID;
-import static com.nct.darkchocolate.cataloguemovieapp.db.DatabaseContract.NoteColumns.DESCRIPTION;
-import static com.nct.darkchocolate.cataloguemovieapp.db.DatabaseContract.NoteColumns.MOVIE_ID;
-import static com.nct.darkchocolate.cataloguemovieapp.db.DatabaseContract.NoteColumns.POSTER;
-import static com.nct.darkchocolate.cataloguemovieapp.db.DatabaseContract.NoteColumns.TITLE;
+import static com.nct.darkchocolate.cataloguemovieapp.db.DatabaseContract.MovieColumns.DESCRIPTION;
+import static com.nct.darkchocolate.cataloguemovieapp.db.DatabaseContract.MovieColumns.MOVIE_ID;
+import static com.nct.darkchocolate.cataloguemovieapp.db.DatabaseContract.MovieColumns.POSTER;
+import static com.nct.darkchocolate.cataloguemovieapp.db.DatabaseContract.MovieColumns.TITLE;
 import static com.nct.darkchocolate.cataloguemovieapp.db.DatabaseContract.TABLE_NAME;
 
 public class MovieHelper {
@@ -111,5 +111,37 @@ public class MovieHelper {
 
     public int deleteMovie(int id) {
         return database.delete(DATABASE_TABLE, MOVIE_ID + " = '" + id + "'", null);
+    }
+
+    public Cursor queryByIdProvider(String id) {
+        return database.query(DATABASE_TABLE, null
+                , _ID + " = ?"
+                , new String[]{id}
+                , null
+                , null
+                , null
+                , null);
+    }
+
+    public Cursor queryProvider() {
+        return database.query(DATABASE_TABLE
+                , null
+                , null
+                , null
+                , null
+                , null
+                , _ID + " ASC");
+    }
+
+    public long insertProvider(ContentValues values) {
+        return database.insert(DATABASE_TABLE, null, values);
+    }
+
+    public int updateProvider(String id, ContentValues values) {
+        return database.update(DATABASE_TABLE, values, _ID + " = ?", new String[]{id});
+    }
+
+    public int deleteProvider(String id) {
+        return database.delete(DATABASE_TABLE, _ID + " = ?", new String[]{id});
     }
 }

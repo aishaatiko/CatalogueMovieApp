@@ -1,8 +1,13 @@
 package com.nct.darkchocolate.cataloguemovieapp;
 
+import android.content.Context;
 import android.content.Intent;
+import android.database.ContentObserver;
+import android.database.Cursor;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -13,6 +18,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ProgressBar;
+import android.widget.Toast;
 
 import com.nct.darkchocolate.cataloguemovieapp.adapter.FavAdapter;
 import com.nct.darkchocolate.cataloguemovieapp.db.MovieHelper;
@@ -24,6 +30,9 @@ import java.util.ArrayList;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
+import static com.nct.darkchocolate.cataloguemovieapp.DetailActivity.EXTRA_POSITION;
+import static com.nct.darkchocolate.cataloguemovieapp.db.DatabaseContract.MovieColumns.CONTENT_URI;
+import static com.nct.darkchocolate.cataloguemovieapp.helper.MappingHelper.mapCursorToArrayList;
 
 
 public class FavoriteFragment extends Fragment implements LoadFavCallback{
@@ -71,7 +80,7 @@ public class FavoriteFragment extends Fragment implements LoadFavCallback{
 
 
         if (savedInstanceState == null) {
-            new LoadFavAsync(movieHelper, this).execute();
+            new LoadFavAsync(getContext(), this).execute();
         } else {
             movies = savedInstanceState.getParcelableArrayList(STATE_LIST);
             if (movies != null) {
@@ -84,10 +93,6 @@ public class FavoriteFragment extends Fragment implements LoadFavCallback{
                 showSelectedMovie(movies.get(position),position);
             }
         });
-
-        swipeRefreshLayout.setRefreshing(false);
-        swipeRefreshLayout.setEnabled(false);
-
     }
 
     private void showSelectedMovie(FavItems items, int position){
@@ -95,7 +100,7 @@ public class FavoriteFragment extends Fragment implements LoadFavCallback{
         Intent detailIntent = new Intent(getActivity(), DetailActivity.class);
         int id = items.getMovie_id();
         detailIntent.putExtra(DetailActivity.EXTRA_ID, id);
-        detailIntent.putExtra(DetailActivity.EXTRA_POSITION, position);
+        detailIntent.putExtra(EXTRA_POSITION, position);
 
         startActivityForResult(detailIntent, DetailActivity.RESULT_DELETE);
     }
@@ -109,21 +114,32 @@ public class FavoriteFragment extends Fragment implements LoadFavCallback{
 
     @Override
     public void preExecute() {
+        progressBar.setVisibility(View.VISIBLE);
 
     }
 
     @Override
-    public void postExecute(ArrayList<FavItems> favItems) {
-        adapter.setData(favItems);
-        movies = favItems;
+    public void postExecute(Cursor cursor) {
+        progressBar.setVisibility(View.INVISIBLE);
+        if (cursor != null){
+            movies = mapCursorToArrayList(cursor);
+        }
+        if (movies.size() > 0) {
+            adapter.setData(movies);
+        } else {
+            adapter.setData(new ArrayList<FavItems>());
+            Toast.makeText(getContext(), R.string.nothing,Toast.LENGTH_SHORT).show();
+        }
     }
 
-    private static class LoadFavAsync extends AsyncTask<Void, Void, ArrayList<FavItems>> {
-        private final WeakReference<MovieHelper> weakFavHelper;
+
+    private static class LoadFavAsync extends AsyncTask<Void, Void, Cursor> {
+
+        private final WeakReference<Context> weakContext;
         private final WeakReference<LoadFavCallback> weakCallback;
 
-        private LoadFavAsync(MovieHelper movieHelper, LoadFavCallback callback) {
-            weakFavHelper = new WeakReference<>(movieHelper);
+        private LoadFavAsync(Context context, LoadFavCallback callback) {
+            weakContext = new WeakReference<>(context);
             weakCallback = new WeakReference<>(callback);
         }
 
@@ -134,16 +150,16 @@ public class FavoriteFragment extends Fragment implements LoadFavCallback{
         }
 
         @Override
-        protected ArrayList<FavItems> doInBackground(Void... voids) {
-
-            return weakFavHelper.get().getAllMovies();
+        protected Cursor doInBackground(Void... voids) {
+            Context context = weakContext.get();
+            return context.getContentResolver().query(CONTENT_URI, null, null, null, null);
         }
 
         @Override
-        protected void onPostExecute(ArrayList<FavItems> favItems) {
-            super.onPostExecute(favItems);
-
-            weakCallback.get().postExecute(favItems);
+        protected void onPostExecute(Cursor cursor) {
+            super.onPostExecute(cursor);
+            if (cursor != null)
+                weakCallback.get().postExecute(cursor);
         }
     }
 
@@ -161,17 +177,25 @@ public class FavoriteFragment extends Fragment implements LoadFavCallback{
             }
             else  {
                 if (resultCode == DetailActivity.RESULT_DELETE) {
-                    int position = data.getIntExtra(DetailActivity.EXTRA_POSITION, 0);
+                    int position = data.getIntExtra(EXTRA_POSITION, 0);
                     adapter.removeItem(position);
 
                 }
             }
         }
     }
-    @Override
-    public void onDestroy() {
-        super.onDestroy();
-        movieHelper.close();
+
+    public static class DataObserver extends ContentObserver {
+        final Context context;
+        public DataObserver(Handler handler, Context context) {
+            super(handler);
+            this.context = context;
+        }
+        @Override
+        public void onChange(boolean selfChange) {
+            super.onChange(selfChange);
+            new LoadFavAsync(context, (LoadFavCallback) context).execute();
+        }
     }
 
 }
