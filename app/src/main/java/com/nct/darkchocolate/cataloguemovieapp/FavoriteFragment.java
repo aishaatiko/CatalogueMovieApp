@@ -10,13 +10,11 @@ import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.nct.darkchocolate.cataloguemovieapp.adapter.FavAdapter;
@@ -41,10 +39,6 @@ public class FavoriteFragment extends Fragment implements LoadFavCallback{
     ArrayList<FavItems> movies = new ArrayList<>();
 
     FavAdapter adapter;
-    @BindView(R.id.pb_movie)
-    ProgressBar progressBar;
-    @BindView(R.id.srl_movie)
-    SwipeRefreshLayout swipeRefreshLayout;
 
     public static final String STATE_LIST = "movies";
 
@@ -56,7 +50,7 @@ public class FavoriteFragment extends Fragment implements LoadFavCallback{
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View rootView = inflater.inflate(R.layout.rv_layout, container, false);
+        View rootView = inflater.inflate(R.layout.rv_favorite, container, false);
         ButterKnife.bind(this, rootView);
 
         return rootView;
@@ -70,12 +64,10 @@ public class FavoriteFragment extends Fragment implements LoadFavCallback{
 
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+        recyclerView.setAdapter(adapter);
 
         movieHelper = MovieHelper.getInstance(getActivity());
         movieHelper.open();
-
-        recyclerView.setAdapter(adapter);
-        progressBar.setVisibility(View.GONE);
 
 
         if (savedInstanceState == null) {
@@ -93,8 +85,6 @@ public class FavoriteFragment extends Fragment implements LoadFavCallback{
             }
         });
 
-        swipeRefreshLayout.setRefreshing(false);
-        swipeRefreshLayout.setEnabled(false);
     }
 
     private void showSelectedMovie(FavItems items, int position){
@@ -116,13 +106,13 @@ public class FavoriteFragment extends Fragment implements LoadFavCallback{
 
     @Override
     public void preExecute() {
-        progressBar.setVisibility(View.VISIBLE);
+
 
     }
 
     @Override
     public void postExecute(Cursor cursor) {
-        progressBar.setVisibility(View.INVISIBLE);
+
         if (cursor != null){
             movies = mapCursorToArrayList(cursor);
         }
@@ -174,7 +164,6 @@ public class FavoriteFragment extends Fragment implements LoadFavCallback{
                 if (resultCode == DetailActivity.RESULT_ADD) {
                     FavItems favItems = data.getParcelableExtra(DetailActivity.EXTRA_MOVIE);
                     adapter.addItem(favItems);
-                    recyclerView.smoothScrollToPosition(adapter.getItemCount() - 1);
                 }
             }
             else  {

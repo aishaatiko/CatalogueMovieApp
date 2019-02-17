@@ -26,5 +26,7 @@
     <string name="search_hint">Judul Film</string>
     <string name="search">Cari</string>
     <string name="nothing">Daftar Favorit Kosong</string>
-
+    <string name="appwidget_text">Film Favorite</string>
+    <string name="add_widget">Tambahkan Widget</string>
+    <string name="empty_text">TIDAK ADA DATA</string>
 </resources>

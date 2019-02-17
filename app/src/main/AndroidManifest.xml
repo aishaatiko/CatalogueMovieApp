@@ -1,9 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.nct.darkchocolate.cataloguemovieapp">
+
     <uses-permission android:name="android.permission.INTERNET" />
-    <permission android:name="com.dicoding.cataloguemovieapp.READ_DATABASE" android:protectionLevel="normal"/>
-    <permission android:name="com.dicoding.cataloguemovieapp.WRITE_DATABASE" android:protectionLevel="normal"/>
+
+    <permission
+        android:name="com.nct.darkchocolate.cataloguemovieapp.READ_DATABASE"
+        android:protectionLevel="normal" />
+    <permission
+        android:name="com.nct.darkchocolate.cataloguemovieapp.WRITE_DATABASE"
+        android:protectionLevel="normal" />
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -11,7 +18,18 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".MainActivity"
+        <receiver android:name=".FavoriteMoviesWidget">
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+            </intent-filter>
+
+            <meta-data
+                android:name="android.appwidget.provider"
+                android:resource="@xml/favorite_movies_widget_info" />
+        </receiver>
+
+        <activity
+            android:name=".MainActivity"
             android:windowSoftInputMode="adjustPan">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -28,12 +46,17 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".MainActivity" />
         </activity>
+
         <provider
-            android:authorities="com.nct.darkchocolate.cataloguemovieapp"
             android:name=".provider.MovieProvider"
+            android:authorities="com.nct.darkchocolate.cataloguemovieapp"
             android:exported="true"
             android:readPermission="com.nct.darkchocolate.cataloguemovieapp.READ_DATABASE"
             android:writePermission="com.nct.darkchocolate.cataloguemovieapp.WRITE_DATABASE" />
+
+        <service
+            android:name=".StackWidgetService"
+            android:permission="android.permission.BIND_REMOTEVIEWS" />
     </application>
 
 </manifest>
